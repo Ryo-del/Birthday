@@ -1,47 +1,74 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function useAudioSync(audioSrc: string) {
+export function useAudioSync(src: string) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const frameRef = useRef<number>(0);
+
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const audio = new Audio(audioSrc);
+    const audio = new Audio(src);
+
     audioRef.current = audio;
 
-    const updateTime = () => setCurrentTime(audio.currentTime);
-    const updateDuration = () => setDuration(audio.duration || 0);
-    const handleEnded = () => setIsPlaying(false);
+    const animate = () => {
+      if (!audio.paused) {
+        setCurrentTime(audio.currentTime);
+        frameRef.current = requestAnimationFrame(animate);
+      }
+    };
 
-    audio.addEventListener("timeupdate", updateTime);
-    audio.addEventListener("loadedmetadata", updateDuration);
-    audio.addEventListener("ended", handleEnded);
+    const onPlay = () => {
+      setIsPlaying(true);
+      animate();
+    };
+
+    const onPause = () => {
+      setIsPlaying(false);
+      cancelAnimationFrame(frameRef.current);
+    };
+
+    const onLoaded = () => {
+      setDuration(audio.duration);
+    };
+
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+    audio.addEventListener("loadedmetadata", onLoaded);
 
     return () => {
+      cancelAnimationFrame(frameRef.current);
+
       audio.pause();
-      audio.removeEventListener("timeupdate", updateTime);
-      audio.removeEventListener("loadedmetadata", updateDuration);
-      audio.removeEventListener("ended", handleEnded);
+
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("loadedmetadata", onLoaded);
     };
-  }, [audioSrc]);
+  }, [src]);
 
-  const togglePlay = () => {
-    if (!audioRef.current) return;
+  const togglePlay = async () => {
+    const audio = audioRef.current;
 
-    if (isPlaying) {
-      audioRef.current.pause();
+    if (!audio) return;
+
+    if (audio.paused) {
+      await audio.play();
     } else {
-      audioRef.current.play();
+      audio.pause();
     }
-    setIsPlaying(!isPlaying);
   };
 
   const seek = (time: number) => {
-    if (!audioRef.current) return;
-    audioRef.current.currentTime = time;
+    const audio = audioRef.current;
+
+    if (!audio) return;
+
+    audio.currentTime = time;
     setCurrentTime(time);
   };
 
@@ -49,7 +76,7 @@ export function useAudioSync(audioSrc: string) {
     isPlaying,
     currentTime,
     duration,
-    togglePlay,
     seek,
+    togglePlay,
   };
 }

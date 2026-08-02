@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { StorySlide } from "@/data/story";
 
@@ -17,68 +17,100 @@ export default function LyricsDisplay({
   currentTime,
   onSelectSlide,
 }: LyricsDisplayProps) {
-  const activeLineRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Автоматический скролл к активной строчке
-  useEffect(() => {
-    if (activeLineRef.current) {
-      activeLineRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center", // Держит активную строку ровно по центру экрана!
-      });
-    }
-  }, [activeSlideId]);
+useEffect(() => {
+  console.log("================================");
+  console.log("ACTIVE SLIDE:", activeSlideId);
 
+  const container = containerRef.current;
+  const active = document.getElementById(`slide-${activeSlideId}`);
+
+  if (!container || !active) {
+    console.log("container or active not found");
+    return;
+  }
+
+  const target =
+    active.offsetTop -
+    container.clientHeight / 2 +
+    active.clientHeight / 2;
+
+  console.log("scrollTop BEFORE:", container.scrollTop);
+  console.log("offsetTop:", active.offsetTop);
+  console.log("target:", target);
+
+  container.scrollTo({
+    top: Math.max(target, 0),
+    behavior: "smooth",
+  });
+
+  requestAnimationFrame(() => {
+    console.log("scrollTop AFTER:", container.scrollTop);
+  });
+}, [activeSlideId]);
   return (
-    <div 
+    <div
+      ref={containerRef}
       className="
-        relative 
-        flex-1 
-        h-[70vh] 
-        max-w-2xl 
-        overflow-y-auto 
-        no-scrollbar 
-        py-[35vh] 
-        px-6 
-        md:px-12
-        [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]
+        relative
+        h-[280px]
+        w-full
+        max-w-2xl
+        overflow-y-auto
+        px-4
+        [scrollbar-width:none]
+        [-ms-overflow-style:none]
+        [&::-webkit-scrollbar]:hidden
+        [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]
       "
     >
-      <div className="flex flex-col gap-10">
+      <div className="py-[120px] space-y-8">
         {storyData.map((slide) => {
-          const isActiveLine = activeSlideId === slide.id;
+          const active = slide.id === activeSlideId;
 
           return (
             <motion.div
+              id={`slide-${slide.id}`}
               key={slide.id}
-              ref={isActiveLine ? activeLineRef : null}
+              layout
+              initial={false}
               animate={{
-                opacity: isActiveLine ? 1 : 0.25,
-                scale: isActiveLine ? 1.05 : 0.95,
-                filter: isActiveLine ? "blur(0px)" : "blur(2px)",
+                opacity: active ? 1 : 0.25,
+                scale: active ? 1 : 0.95,
+                filter: active ? "blur(0px)" : "blur(2px)",
               }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="cursor-pointer origin-left transition-all"
+              transition={{
+                duration: 0.35,
+                ease: "easeOut",
+              }}
+              className="cursor-pointer"
               onClick={() => onSelectSlide(slide.startTime)}
             >
-              <p className="text-3xl md:text-5xl font-bold leading-snug tracking-wide flex flex-wrap gap-x-3 gap-y-1">
-                {slide.words.map((word, wordIdx) => {
-                  const isWordActive = currentTime >= word.start;
-                  const isWordCurrentlySinging =
-                    currentTime >= word.start && currentTime <= word.end;
+              <p className="flex flex-wrap gap-x-3 gap-y-2 text-3xl font-bold leading-snug md:text-4xl lg:text-[2.8rem]">
+                {slide.words.map((word, i) => {
+                  const passed = currentTime >= word.start;
+
+                  const singing =
+                    currentTime >= word.start &&
+                    currentTime <= word.end;
 
                   return (
                     <motion.span
-                      key={wordIdx}
+                      key={i}
+                      initial={false}
                       animate={{
-                        color: isWordActive ? "#FFFFFF" : "rgba(255, 255, 255, 0.3)",
-                        scale: isWordCurrentlySinging ? 1.08 : 1,
-                        textShadow: isWordCurrentlySinging
-                          ? "0px 0px 20px rgba(255, 255, 255, 0.9)"
-                          : "0px 0px 0px rgba(0,0,0,0)",
+                        color: passed
+                          ? "#fff"
+                          : "rgba(255,255,255,.25)",
+                        scale: singing ? 1.06 : 1,
+                        textShadow: singing
+                          ? "0 0 18px rgba(255,255,255,.8)"
+                          : "0 0 0 rgba(0,0,0,0)",
                       }}
-                      transition={{ duration: 0.15, ease: "easeOut" }}
-                      className="inline-block"
+                      transition={{
+                        duration: 0.15,
+                      }}
                     >
                       {word.text}
                     </motion.span>
