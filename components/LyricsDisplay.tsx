@@ -19,36 +19,28 @@ export default function LyricsDisplay({
 }: LyricsDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-useEffect(() => {
-  console.log("================================");
-  console.log("ACTIVE SLIDE:", activeSlideId);
+  useEffect(() => {
+    const container = containerRef.current;
+    const activeElement = document.getElementById(`slide-${activeSlideId}`);
 
-  const container = containerRef.current;
-  const active = document.getElementById(`slide-${activeSlideId}`);
+    if (!container || !activeElement) return;
 
-  if (!container || !active) {
-    console.log("container or active not found");
-    return;
-  }
+    // Используем getBoundingClientRect для точного расчета позиции относительно контейнера
+    const containerRect = container.getBoundingClientRect();
+    const activeRect = activeElement.getBoundingClientRect();
 
-  const target =
-    active.offsetTop -
-    container.clientHeight / 2 +
-    active.clientHeight / 2;
+    const targetScroll =
+      container.scrollTop +
+      (activeRect.top - containerRect.top) -
+      containerRect.height / 2 +
+      activeRect.height / 2;
 
-  console.log("scrollTop BEFORE:", container.scrollTop);
-  console.log("offsetTop:", active.offsetTop);
-  console.log("target:", target);
+    container.scrollTo({
+      top: Math.max(0, targetScroll),
+      behavior: "smooth",
+    });
+  }, [activeSlideId]);
 
-  container.scrollTo({
-    top: Math.max(target, 0),
-    behavior: "smooth",
-  });
-
-  requestAnimationFrame(() => {
-    console.log("scrollTop AFTER:", container.scrollTop);
-  });
-}, [activeSlideId]);
   return (
     <div
       ref={containerRef}
@@ -73,7 +65,7 @@ useEffect(() => {
             <motion.div
               id={`slide-${slide.id}`}
               key={slide.id}
-              layout
+              // УБРАЛИ prop "layout", чтобы он не ломал скролл и offsetTop!
               initial={false}
               animate={{
                 opacity: active ? 1 : 0.25,
@@ -85,12 +77,14 @@ useEffect(() => {
                 ease: "easeOut",
               }}
               className="cursor-pointer"
-              onClick={() => onSelectSlide(slide.startTime)}
+              onClick={() => {
+                // При клике песня перематывается на startTime этого предложения
+                onSelectSlide(slide.startTime);
+              }}
             >
               <p className="flex flex-wrap gap-x-3 gap-y-2 text-3xl font-bold leading-snug md:text-4xl lg:text-[2.8rem]">
                 {slide.words.map((word, i) => {
                   const passed = currentTime >= word.start;
-
                   const singing =
                     currentTime >= word.start &&
                     currentTime <= word.end;
@@ -100,9 +94,7 @@ useEffect(() => {
                       key={i}
                       initial={false}
                       animate={{
-                        color: passed
-                          ? "#fff"
-                          : "rgba(255,255,255,.25)",
+                        color: passed ? "#fff" : "rgba(255,255,255,.25)",
                         scale: singing ? 1.06 : 1,
                         textShadow: singing
                           ? "0 0 18px rgba(255,255,255,.8)"

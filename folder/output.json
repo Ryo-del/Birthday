@@ -1,19 +1,4 @@
-export interface Word {
-  text: string;
-  start: number;
-  end: number;
-}
-
-export interface StorySlide {
-  id: number;
-  startTime: number;
-  endTime: number;
-  year: number;
-  words: Word[]; // Массив слов с таймингами
-  images: string[];
-}
-
-export const STORY_DATA: StorySlide[] = [
+[
   {
     "id": 1,
     "startTime": 16.663,
@@ -2336,4 +2321,4 @@ export const STORY_DATA: StorySlide[] = [
       "/images/2043-1.jpg"
     ]
   }
-];
+]
