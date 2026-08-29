@@ -9,6 +9,7 @@ export function useAudioSync(src: string) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [ended, setEnded] = useState(false);
 
   useEffect(() => {
     const audio = new Audio(src);
@@ -24,6 +25,7 @@ export function useAudioSync(src: string) {
 
     const onPlay = () => {
       setIsPlaying(true);
+      setEnded(false);
       animate();
     };
 
@@ -36,9 +38,16 @@ export function useAudioSync(src: string) {
       setDuration(audio.duration);
     };
 
+    const onEnded = () => {
+      setIsPlaying(false);
+      setEnded(true);
+      cancelAnimationFrame(frameRef.current);
+    };
+
     audio.addEventListener("play", onPlay);
     audio.addEventListener("pause", onPause);
     audio.addEventListener("loadedmetadata", onLoaded);
+    audio.addEventListener("ended", onEnded);
 
     return () => {
       cancelAnimationFrame(frameRef.current);
@@ -48,6 +57,7 @@ export function useAudioSync(src: string) {
       audio.removeEventListener("play", onPlay);
       audio.removeEventListener("pause", onPause);
       audio.removeEventListener("loadedmetadata", onLoaded);
+      audio.removeEventListener("ended", onEnded);
     };
   }, [src]);
 
@@ -70,12 +80,14 @@ export function useAudioSync(src: string) {
 
     audio.currentTime = time;
     setCurrentTime(time);
+    setEnded(false);
   };
 
   return {
     isPlaying,
     currentTime,
     duration,
+    ended,
     seek,
     togglePlay,
   };

@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { StorySlide } from "@/data/story";
 
 interface LyricsDisplayProps {
@@ -11,108 +10,78 @@ interface LyricsDisplayProps {
   onSelectSlide: (startTime: number) => void;
 }
 
+type Role = "prev" | "active" | "next1" | "next2";
+
+const ROLE_STYLES: Record<Role, string> = {
+  prev: "text-lg md:text-xl text-white/25 font-semibold",
+  active: "text-3xl md:text-5xl font-bold",
+  next1: "text-lg md:text-xl text-white/25 font-semibold",
+  next2: "text-base md:text-lg text-white/12 font-semibold",
+};
+
 export default function LyricsDisplay({
   storyData,
   activeSlideId,
   currentTime,
   onSelectSlide,
 }: LyricsDisplayProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const activeIndex = storyData.findIndex((s) => s.id === activeSlideId);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    const activeElement = document.getElementById(`slide-${activeSlideId}`);
+  // Окно строк: 1 сверху, активная, 2 снизу — как в Apple Music
+  const windowSlides: { slide: StorySlide; role: Role }[] = [];
 
-    if (!container || !activeElement) return;
-
-    // Используем getBoundingClientRect для точного расчета позиции относительно контейнера
-    const containerRect = container.getBoundingClientRect();
-    const activeRect = activeElement.getBoundingClientRect();
-
-    const targetScroll =
-      container.scrollTop +
-      (activeRect.top - containerRect.top) -
-      containerRect.height / 2 +
-      activeRect.height / 2;
-
-    container.scrollTo({
-      top: Math.max(0, targetScroll),
-      behavior: "smooth",
-    });
-  }, [activeSlideId]);
+  if (activeIndex > 0) {
+    windowSlides.push({ slide: storyData[activeIndex - 1], role: "prev" });
+  }
+  windowSlides.push({ slide: storyData[activeIndex], role: "active" });
+  if (activeIndex + 1 < storyData.length) {
+    windowSlides.push({ slide: storyData[activeIndex + 1], role: "next1" });
+  }
+  if (activeIndex + 2 < storyData.length) {
+    windowSlides.push({ slide: storyData[activeIndex + 2], role: "next2" });
+  }
 
   return (
-    <div
-      ref={containerRef}
-      className="
-        relative
-        h-[280px]
-        w-full
-        max-w-2xl
-        overflow-y-auto
-        px-4
-        [scrollbar-width:none]
-        [-ms-overflow-style:none]
-        [&::-webkit-scrollbar]:hidden
-        [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]
-      "
-    >
-      <div className="py-[120px] space-y-8">
-        {storyData.map((slide) => {
-          const active = slide.id === activeSlideId;
-
-          return (
-            <motion.div
-              id={`slide-${slide.id}`}
-              key={slide.id}
-              // УБРАЛИ prop "layout", чтобы он не ломал скролл и offsetTop!
-              initial={false}
-              animate={{
-                opacity: active ? 1 : 0.25,
-                scale: active ? 1 : 0.95,
-                filter: active ? "blur(0px)" : "blur(2px)",
-              }}
-              transition={{
-                duration: 0.35,
-                ease: "easeOut",
-              }}
-              className="cursor-pointer"
-              onClick={() => {
-                // При клике песня перематывается на startTime этого предложения
-                onSelectSlide(slide.startTime);
-              }}
-            >
-              <p className="flex flex-wrap gap-x-3 gap-y-2 text-3xl font-bold leading-snug md:text-4xl lg:text-[2.8rem]">
-                {slide.words.map((word, i) => {
+    <div className="relative flex h-full w-full max-w-xl min-w-0 flex-col justify-center gap-4 px-4 md:gap-5">
+      <AnimatePresence mode="popLayout" initial={false}>
+        {windowSlides.map(({ slide, role }) => (
+          <motion.p
+            key={slide.id}
+            layout
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -24 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            onClick={() => onSelectSlide(slide.startTime)}
+            className={`flex cursor-pointer flex-wrap gap-x-2 gap-y-1 leading-snug ${ROLE_STYLES[role]}`}
+          >
+            {role === "active"
+              ? slide.words.map((word, i) => {
                   const passed = currentTime >= word.start;
                   const singing =
-                    currentTime >= word.start &&
-                    currentTime <= word.end;
+                    currentTime >= word.start && currentTime <= word.end;
 
                   return (
                     <motion.span
                       key={i}
                       initial={false}
                       animate={{
-                        color: passed ? "#fff" : "rgba(255,255,255,.25)",
-                        scale: singing ? 1.06 : 1,
+                        color: passed ? "#fff" : "rgba(255,255,255,.35)",
+                        scale: singing ? 1.05 : 1,
                         textShadow: singing
-                          ? "0 0 18px rgba(255,255,255,.8)"
+                          ? "0 0 18px rgba(255,255,255,.7)"
                           : "0 0 0 rgba(0,0,0,0)",
                       }}
-                      transition={{
-                        duration: 0.15,
-                      }}
+                      transition={{ duration: 0.15 }}
                     >
                       {word.text}
                     </motion.span>
                   );
-                })}
-              </p>
-            </motion.div>
-          );
-        })}
-      </div>
+                })
+              : slide.words.map((w) => w.text).join(" ")}
+          </motion.p>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }

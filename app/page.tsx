@@ -11,6 +11,8 @@ import PhotoGallery from "@/components/PhotoGallery";
 import LyricsDisplay from "@/components/LyricsDisplay";
 import Timeline from "@/components/Timeline";
 import AudioPlayer from "@/components/AudioPlayer";
+import AmbientBackground from "@/components/ui/AmbientBackground";
+import Finale from "@/components/ui/Finale";
 
 export default function Home() {
   const [hasStarted, setHasStarted] = useState(false);
@@ -19,11 +21,11 @@ export default function Home() {
     isPlaying,
     currentTime,
     duration,
+    ended,
     togglePlay,
     seek,
   } = useAudioSync("/audio/birthday-song.opus");
 
-  // Находим последний слайд, который уже начался
   let activeSlide = STORY_DATA[0];
 
   for (const slide of STORY_DATA) {
@@ -34,47 +36,43 @@ export default function Home() {
     }
   }
 
-  console.log(
-    "TIME:",
-    currentTime.toFixed(3),
-    "ACTIVE:",
-    activeSlide.id
-  );
-
   const handleStart = () => {
     setHasStarted(true);
     togglePlay();
   };
 
+  const handleReplay = () => {
+    seek(0);
+    if (!isPlaying) togglePlay();
+  };
+
   return (
     <main className="relative flex h-screen w-full overflow-hidden bg-neutral-950 font-sans text-white select-none">
-      {/* Фон */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-purple-900/30 via-black to-pink-900/20 blur-3xl" />
+      <AmbientBackground />
 
-      {/* Экран приветствия */}
       <AnimatePresence>
         {!hasStarted && <Intro onStart={handleStart} />}
       </AnimatePresence>
 
-      {/* Основной интерфейс */}
       {hasStarted && (
         <>
-          <div className="relative z-10 flex h-full w-full items-center justify-between px-8 md:px-16">
+          {/* Мобильный: колонка (фото сверху / текст снизу). Десктоп: строка (фото слева / текст справа) */}
+          <div className="relative z-10 flex h-full w-full flex-col md:flex-row">
             <PhotoGallery activeSlide={activeSlide} />
 
-            <LyricsDisplay
-              storyData={STORY_DATA}
-              activeSlideId={activeSlide.id}
-              currentTime={currentTime}
-              onSelectSlide={seek}
-            />
-
-            <Timeline
-              currentTime={currentTime}
-              duration={duration}
-              activeSlide={activeSlide}
-              onSeek={seek}
-            />
+            <div className="relative z-10 flex h-[55%] w-full items-center justify-center gap-6 px-6 pb-28 md:h-full md:w-[48%] md:justify-end md:px-10 md:pb-0">
+              <LyricsDisplay
+                storyData={STORY_DATA}
+                activeSlideId={activeSlide.id}
+                currentTime={currentTime}
+                onSelectSlide={seek}
+              />
+              <Timeline
+                storyData={STORY_DATA}
+                activeSlideId={activeSlide.id}
+                onSeek={seek}
+              />
+            </div>
           </div>
 
           <AudioPlayer
@@ -83,6 +81,10 @@ export default function Home() {
             duration={duration}
             onTogglePlay={togglePlay}
           />
+
+          <AnimatePresence>
+            {ended && <Finale onReplay={handleReplay} />}
+          </AnimatePresence>
         </>
       )}
     </main>
