@@ -27,7 +27,6 @@ export default function LyricsDisplay({
 }: LyricsDisplayProps) {
   const activeIndex = storyData.findIndex((s) => s.id === activeSlideId);
 
-  // Окно строк: 1 сверху, активная, 2 снизу — как в Apple Music
   const windowSlides: { slide: StorySlide; role: Role }[] = [];
 
   if (activeIndex > 0) {
@@ -42,16 +41,21 @@ export default function LyricsDisplay({
   }
 
   return (
-    <div className="relative flex h-full w-full max-w-xl min-w-0 flex-col justify-center gap-4 px-4 md:gap-5">
+    <div className="relative flex h-full w-full max-w-xl min-w-0 mx-auto flex-col justify-center gap-4 px-4 md:gap-5">
       <AnimatePresence mode="popLayout" initial={false}>
         {windowSlides.map(({ slide, role }) => (
           <motion.p
             key={slide.id}
             layout
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -28, filter: "blur(6px)" }}
+            transition={{
+              layout: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+              opacity: { duration: 0.6, ease: "easeOut" },
+              filter: { duration: 0.6, ease: "easeOut" },
+              y: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+            }}
             onClick={() => onSelectSlide(slide.startTime)}
             className={`flex cursor-pointer flex-wrap gap-x-2 gap-y-1 leading-snug ${ROLE_STYLES[role]}`}
           >
@@ -72,7 +76,7 @@ export default function LyricsDisplay({
                           ? "0 0 18px rgba(255,255,255,.7)"
                           : "0 0 0 rgba(0,0,0,0)",
                       }}
-                      transition={{ duration: 0.15 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                     >
                       {word.text}
                     </motion.span>

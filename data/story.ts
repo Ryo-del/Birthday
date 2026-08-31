@@ -62,7 +62,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/1997-1.jpg"
+      "/images/2001.jpeg"
     ]
   },
   {
@@ -108,7 +108,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/1998-1.jpg"
+      "/images/2002.jpeg"
     ]
   },
   {
@@ -144,7 +144,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/1999-1.jpg"
+      "/images/2003.jpeg"
     ]
   },
   {
@@ -185,7 +185,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2000-1.jpg"
+      "/images/2004.jpeg"
     ]
   },
   {

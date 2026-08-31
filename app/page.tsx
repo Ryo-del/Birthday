@@ -9,7 +9,6 @@ import { useAudioSync } from "@/hooks/useAudioSync";
 import Intro from "@/components/ui/Intro";
 import PhotoGallery from "@/components/PhotoGallery";
 import LyricsDisplay from "@/components/LyricsDisplay";
-import Timeline from "@/components/Timeline";
 import AudioPlayer from "@/components/AudioPlayer";
 import AmbientBackground from "@/components/ui/AmbientBackground";
 import Finale from "@/components/ui/Finale";
@@ -60,19 +59,14 @@ export default function Home() {
           <div className="relative z-10 flex h-full w-full flex-col md:flex-row">
             <PhotoGallery activeSlide={activeSlide} />
 
-            <div className="relative z-10 flex h-[55%] w-full items-center justify-center gap-6 px-6 pb-28 md:h-full md:w-[48%] md:justify-end md:px-10 md:pb-0">
-              <LyricsDisplay
-                storyData={STORY_DATA}
-                activeSlideId={activeSlide.id}
-                currentTime={currentTime}
-                onSelectSlide={seek}
-              />
-              <Timeline
-                storyData={STORY_DATA}
-                activeSlideId={activeSlide.id}
-                onSeek={seek}
-              />
-            </div>
+            <div className="relative z-10 flex h-[55%] w-full items-center justify-center gap-6 px-6 pb-28 md:h-full md:w-[48%] md:px-10 md:pb-0">
+  <LyricsDisplay
+    storyData={STORY_DATA}
+    activeSlideId={activeSlide.id}
+    currentTime={currentTime}
+    onSelectSlide={seek}
+  />
+</div>
           </div>
 
           <AudioPlayer

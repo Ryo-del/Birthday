@@ -28,7 +28,7 @@ export default function AudioPlayer({
       <div className="relative overflow-hidden rounded-3xl bg-white/5 border border-white/10 backdrop-blur-2xl px-6 py-5 shadow-2xl">
         <div className="absolute bottom-0 left-0 h-1 bg-white/10 w-full" />
         <motion.div
-          className="absolute bottom-0 left-0 h-1 bg-white/40"
+          className="absolute bottom-8 right-6 md:right-12 z-40 w-[92%] max-w-md md:w-[42%]"
           style={{ width: `${progress}%` }}
         />
 
