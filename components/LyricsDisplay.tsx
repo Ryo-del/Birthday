@@ -41,7 +41,7 @@ export default function LyricsDisplay({
   }
 
   return (
-    <div className="relative flex h-full w-full max-w-xl min-w-0 mx-auto flex-col justify-center gap-4 px-4 md:gap-5">
+    <div className="relative mx-auto flex h-full w-full max-w-xl min-w-0 flex-col justify-center gap-4 px-4 md:gap-5">
       <AnimatePresence mode="popLayout" initial={false}>
         {windowSlides.map(({ slide, role }) => (
           <motion.p

@@ -47,7 +47,7 @@ export default function Home() {
 
   return (
     <main className="relative flex h-screen w-full overflow-hidden bg-neutral-950 font-sans text-white select-none">
-      <AmbientBackground />
+      <AmbientBackground imgUrl={activeSlide.images[0]} />
 
       <AnimatePresence>
         {!hasStarted && <Intro onStart={handleStart} />}
@@ -60,13 +60,13 @@ export default function Home() {
             <PhotoGallery activeSlide={activeSlide} />
 
             <div className="relative z-10 flex h-[55%] w-full items-center justify-center gap-6 px-6 pb-28 md:h-full md:w-[48%] md:px-10 md:pb-0">
-  <LyricsDisplay
-    storyData={STORY_DATA}
-    activeSlideId={activeSlide.id}
-    currentTime={currentTime}
-    onSelectSlide={seek}
-  />
-</div>
+              <LyricsDisplay
+                storyData={STORY_DATA}
+                activeSlideId={activeSlide.id}
+                currentTime={currentTime}
+                onSelectSlide={seek}
+              />
+            </div>
           </div>
 
           <AudioPlayer

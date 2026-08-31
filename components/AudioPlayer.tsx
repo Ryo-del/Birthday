@@ -23,18 +23,17 @@ export default function AudioPlayer({
     <motion.div
       initial={{ y: 50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-xl"
+      className="absolute bottom-8 left-1/2 z-40 w-[92%] max-w-md -translate-x-1/2 md:left-[76%] md:w-[42%]"
     >
-      <div className="relative overflow-hidden rounded-3xl bg-white/5 border border-white/10 backdrop-blur-2xl px-6 py-5 shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl bg-white/5 border border-white/10 backdrop-blur-2xl px-5 py-5 shadow-2xl">
         <div className="absolute bottom-0 left-0 h-1 bg-white/10 w-full" />
         <motion.div
-          className="absolute bottom-8 right-6 md:right-12 z-40 w-[92%] max-w-md md:w-[42%]"
+          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-pink-400/70 to-purple-400/70"
           style={{ width: `${progress}%` }}
         />
 
-        <div className="flex items-center gap-6">
-          {/* Название — теперь не сжимается, имеет своё пространство */}
-          <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <div className="flex min-w-0 items-center gap-4">
+          <div className="flex min-w-0 flex-1 flex-col gap-1 overflow-hidden">
             <span className="truncate text-base font-semibold text-white/90 tracking-tight">
               A Million Dreams
             </span>
@@ -43,24 +42,23 @@ export default function AudioPlayer({
             </span>
           </div>
 
-          {/* Контролы — фиксированная ширина, не сжимаются */}
-          <div className="flex shrink-0 items-center gap-4">
-            <span className="w-9 text-right text-[11px] font-mono text-white/30">
+          <div className="flex shrink-0 items-center gap-3">
+            <span className="w-8 text-right text-[11px] font-mono text-white/30">
               {formatTime(currentTime)}
             </span>
 
             <button
               onClick={onTogglePlay}
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-black transition-all hover:scale-110 active:scale-95"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-black transition-all hover:scale-110 active:scale-95"
             >
               {isPlaying ? (
-                <Pause size={20} className="fill-black" />
+                <Pause size={18} className="fill-black" />
               ) : (
-                <Play size={20} className="ml-1 fill-black" />
+                <Play size={18} className="ml-0.5 fill-black" />
               )}
             </button>
 
-            <span className="w-9 text-[11px] font-mono text-white/30">
+            <span className="w-8 text-[11px] font-mono text-white/30">
               {formatTime(duration)}
             </span>
           </div>

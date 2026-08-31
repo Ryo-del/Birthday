@@ -62,7 +62,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2001.jpeg"
+      "/images/1.jpeg"
     ]
   },
   {
@@ -108,7 +108,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2002.jpeg"
+      "/images/2.jpeg"
     ]
   },
   {
@@ -144,7 +144,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2003.jpeg"
+      "/images/3.jpeg"
     ]
   },
   {
@@ -185,7 +185,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2004.jpeg"
+      "/images/4.jpeg"
     ]
   },
   {
@@ -226,7 +226,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2001-1.jpg"
+      "/images/5.jpeg"
     ]
   },
   {
@@ -262,7 +262,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2002-1.jpg"
+      "/images/6.jpeg"
     ]
   },
   {
@@ -323,7 +323,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2003-1.jpg"
+      "/images/7.jpeg"
     ]
   },
   {
@@ -384,7 +384,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2004-1.jpg"
+      "/images/8.jpeg"
     ]
   },
   {
@@ -450,7 +450,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2005-1.jpg"
+      "/images/9.jpeg"
     ]
   },
   {
@@ -506,7 +506,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2006-1.jpg"
+      "/images/10.jpeg"
     ]
   },
   {
@@ -552,7 +552,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2007-1.jpg"
+      "/images/11.jpeg"
     ]
   },
   {
@@ -593,7 +593,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2008-1.jpg"
+      "/images/12.jpeg"
     ]
   },
   {
@@ -639,7 +639,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2009-1.jpg"
+      "/images/13.jpeg"
     ]
   },
   {
@@ -690,7 +690,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2010-1.jpg"
+      "/images/14.jpeg"
     ]
   },
   {
@@ -736,7 +736,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2011-1.jpg"
+      "/images/15.jpeg"
     ]
   },
   {
@@ -787,7 +787,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2012-1.jpg"
+      "/images/16.jpeg"
     ]
   },
   {
@@ -848,7 +848,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2013-1.jpg"
+      "/images/17.jpeg"
     ]
   },
   {
@@ -889,7 +889,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2014-1.jpg"
+      "/images/18.jpeg"
     ]
   },
   {
@@ -950,7 +950,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2015-1.jpg"
+      "/images/19.jpeg"
     ]
   },
   {
@@ -981,7 +981,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2016-1.jpg"
+      "/images/20.jpeg"
     ]
   },
   {
@@ -1047,7 +1047,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2017-1.jpg"
+      "/images/21.jpg"
     ]
   },
   {
@@ -1108,7 +1108,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2018-1.jpg"
+      "/images/22.jpg"
     ]
   },
   {
@@ -1169,7 +1169,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2019-1.jpg"
+      "/images/23.jpg"
     ]
   },
   {
@@ -1240,7 +1240,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2020-1.jpg"
+      "/images/24.jpg"
     ]
   },
   {
@@ -1291,7 +1291,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2021-1.jpg"
+      "/images/25.jpg"
     ]
   },
   {
@@ -1337,7 +1337,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2022-1.jpg"
+      "/images/26.jpg"
     ]
   },
   {
@@ -1378,7 +1378,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2023-1.jpg"
+      "/images/27.jpg"
     ]
   },
   {
@@ -1424,7 +1424,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2024-1.jpg"
+      "/images/28.jpg"
     ]
   },
   {
@@ -1475,7 +1475,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2025-1.jpg"
+      "/images/29.jpg"
     ]
   },
   {
@@ -1521,7 +1521,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2026-1.jpg"
+      "/images/30.jpg"
     ]
   },
   {
@@ -1572,7 +1572,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2027-1.jpg"
+      "/images/31.jpg"
     ]
   },
   {
@@ -1633,7 +1633,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2028-1.jpg"
+      "/images/32.jpg"
     ]
   },
   {
@@ -1664,7 +1664,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2029-1.jpg"
+      "/images/33.jpg"
     ]
   },
   {
@@ -1710,7 +1710,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2030-1.jpg"
+      "/images/34.jpg"
     ]
   },
   {
@@ -1746,7 +1746,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2031-1.jpg"
+      "/images/35.jpg"
     ]
   },
   {
@@ -1797,7 +1797,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2032-1.jpg"
+      "/images/36.jpg"
     ]
   },
   {
@@ -1863,7 +1863,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2033-1.jpg"
+      "/images/37.jpg"
     ]
   },
   {
@@ -1919,7 +1919,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2034-1.jpg"
+      "/images/38.jpg"
     ]
   },
   {
@@ -1960,7 +1960,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2035-1.jpg"
+      "/images/39.jpg"
     ]
   },
   {
@@ -2001,7 +2001,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2036-1.jpg"
+      "/images/40.jpg"
     ]
   },
   {
@@ -2042,7 +2042,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2037-1.jpg"
+      "/images/41.jpg"
     ]
   },
   {
@@ -2088,7 +2088,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2038-1.jpg"
+      "/images/42.jpg"
     ]
   },
   {
@@ -2139,7 +2139,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2039-1.jpg"
+      "/images/43.jpg"
     ]
   },
   {
@@ -2185,7 +2185,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2040-1.jpg"
+      "/images/44.jpg"
     ]
   },
   {
@@ -2236,7 +2236,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2041-1.jpg"
+      "/images/45.jpg"
     ]
   },
   {
@@ -2292,7 +2292,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2042-1.jpg"
+      "/images/46.jpg"
     ]
   },
   {
@@ -2333,7 +2333,7 @@ export const STORY_DATA: StorySlide[] = [
       }
     ],
     "images": [
-      "/images/2043-1.jpg"
+      "/images/47.jpg"
     ]
   }
 ];
